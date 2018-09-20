@@ -1,15 +1,15 @@
 #!/usr/bin/php
 <?php
 /**
- * ##### Listing of files and file media types #####
+ * ##### Listing of files and filter file media types #####
  **/
-// human readable file size function
 $dir = ".";
-function human_filesize($size, $precision = 2)
+function human_filesize($size, $precision = 2) // human readable file size function
 {
-    for ($i = 0;
-         ($size / 1024) > 0.9;
-         $i++, $size /= 1024) {
+    $i = 0;
+    while (($size / 1024) > 0.9) {
+        $i++;
+        $size /= 1024;
     }
     return round($size, $precision) . ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][$i];
 }
@@ -34,20 +34,19 @@ for ($i = 1; $i < $argc; $i++) {
     }
 }
 $files = scandir($dir);
-// jedes element von $files wird jedes mal in $file getan
-foreach ($files as $file) {
-    // list all files if no filter
-    if (is_dir("$dir/$file")) {
+
+foreach ($files as $file) {  // every element of $files is put into $file
+    if (is_dir("$dir/$file")) {  // list all files if no filter
         continue;
     }
     if (empty($contenttype)) {
-        //   if (mime_content_type($file==dir))
         echo $file . " " . human_filesize(filesize($dir . "/" . $file)) . " " .
             mime_content_type($dir . "/" . $file) . "\n";
         continue;
     }
     $test = mime_content_type($dir . "/" . $file);
     if (strpos($test, $contenttype) === 0) {
-        echo $file . "\n";
+        echo $file . " " . human_filesize(filesize($dir . "/" . $file)) . " " .
+            mime_content_type($dir . "/" . $file) . "\n";
     }
 }
