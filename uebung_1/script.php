@@ -4,7 +4,7 @@
  * ##### Listing of files and file media types #####
  **/
 // human readable file size function
- $dir = ".";
+$dir = ".";
 function human_filesize($size, $precision = 2)
 {
     for ($i = 0;
@@ -23,21 +23,16 @@ for ($i = 1; $i < $argc; $i++) {
         case "-c":  //
             $i++;
             if ($i >= $argc) {
-                echo "Please enter a media type. \n";
+                echo "Please enter a media type with -c (type). \n";
                 exit;
             }
             $contenttype = $argv[$i];
             break;
         default:
             $dir = $argv[1];
-//            var_dump($dir);
-//            die();
             break;
     }
 }
-// var_dump($i);
-// get dir
-//$contenttype = $argv[$i];
 $files = scandir($dir);
 // jedes element von $files wird jedes mal in $file getan
 foreach ($files as $file) {
@@ -53,14 +48,6 @@ foreach ($files as $file) {
     }
     $test = mime_content_type($dir . "/" . $file);
     if (strpos($test, $contenttype) === 0) {
-        echo $file."\n";
-    } // erst mal nur $file
-    //elseif (strpos($test, $contenttype) === FALSE) {
-       // echo "tell mediatype \n"; // nachricht wenn kein mediatype übergeben wurde
-      //  echo "";
-
-    //  }
-   // var_dump(strpos($test, $contenttype));
-   // var_dump($test);
-   // var_dump($contenttype);
+        echo $file . "\n";
+    }
 }
