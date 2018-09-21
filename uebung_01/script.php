@@ -1,5 +1,8 @@
 #!/usr/bin/php
 <?php
+
+include "LoggerCLI.php";
+
 /**
  * ##### Listing of files and filter file media types #####
  **/
@@ -35,18 +38,18 @@ for ($i = 1; $i < $argc; $i++) {
 }
 $files = scandir($dir);
 
+$loggerCLI_foo = new LoggerCLI;
+
 foreach ($files as $file) {  // every element of $files is put into $file
     if (is_dir("$dir/$file")) {  // list all files if no filter
         continue;
     }
     if (empty($contenttype)) {
-        echo $file . " " . human_filesize(filesize($dir . "/" . $file)) . " " .
-            mime_content_type($dir . "/" . $file) . "\n";
+        $loggerCLI_foo->print_($file, $dir);
         continue;
     }
     $test = mime_content_type($dir . "/" . $file);
     if (strpos($test, $contenttype) === 0) {
-        echo $file . " " . human_filesize(filesize($dir . "/" . $file)) . " " .
-            mime_content_type($dir . "/" . $file) . "\n";
+        $loggerCLI_foo->print_($file, $dir);
     }
 }
