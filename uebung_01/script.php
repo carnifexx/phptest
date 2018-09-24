@@ -1,21 +1,12 @@
 #!/usr/bin/php
 <?php
 
-include "LoggerCLI.php";
+require_once "LoggerCLI.php";
 
 /**
  * ##### Listing of files and filter file media types #####
  **/
 $dir = ".";
-function human_filesize($size, $precision = 2) // human readable file size function
-{
-    $i = 0;
-    while (($size / 1024) > 0.9) {
-        $i++;
-        $size /= 1024;
-    }
-    return round($size, $precision) . ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][$i];
-}
 
 /**
  * get content type from argv and directory argument
@@ -45,11 +36,11 @@ foreach ($files as $file) {  // every element of $files is put into $file
         continue;
     }
     if (empty($contenttype)) {
-        $loggerCLI_foo->print_($file, $dir);
+        $loggerCLI_foo->print_($dir, $file);
         continue;
     }
     $test = mime_content_type($dir . "/" . $file);
     if (strpos($test, $contenttype) === 0) {
-        $loggerCLI_foo->print_($file, $dir);
+        $loggerCLI_foo->print_($dir, $file);
     }
 }
