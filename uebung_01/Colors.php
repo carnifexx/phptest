@@ -10,7 +10,7 @@ class Colors
     // Returns colored string
     public function getColoredString($string, $color)
     {
-        $lored_string = "";
+        $colored_string = "";
         // Check if given foreground color found
 
         $colored_string .= "\033[" . $color . "m";
